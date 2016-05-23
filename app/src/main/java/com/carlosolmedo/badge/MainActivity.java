@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.carlosolmedo.badgeview.BadgeView;
+
 public class MainActivity extends AppCompatActivity {
 
     BadgeView badge1, badge2, badge3;

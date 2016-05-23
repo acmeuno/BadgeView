@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -218,7 +219,11 @@ public class BadgeView extends View {
         return resolveSizeAndState(size, measureSpec, 0);
     }
 
-    public void setBadgeText(String text) {
+    /**
+     * Change badge text
+     * @param text Text to show
+     */
+    public void setBadgeText(@Nullable String text) {
         if (text==null) {
             text = "";
         }
