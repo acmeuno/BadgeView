@@ -9,12 +9,12 @@
     tools:context="com.carlosolmedo.badge.MainActivity">
 
 
-    <com.carlosolmedo.badge.BadgeView
+    <com.carlosolmedo.badgeview.BadgeView
         android:id="@+id/badge1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.carlosolmedo.badge.BadgeView
+    <com.carlosolmedo.badgeview.BadgeView
         android:id="@+id/badge2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,12 +23,12 @@
         badge:badge_textColor="@color/colorAccent"
         badge:badge_textSize="18" />
 
-    <com.carlosolmedo.badge.BadgeView
+    <com.carlosolmedo.badgeview.BadgeView
         android:id="@+id/badge3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.carlosolmedo.badge.BadgeView
+    <com.carlosolmedo.badgeview.BadgeView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

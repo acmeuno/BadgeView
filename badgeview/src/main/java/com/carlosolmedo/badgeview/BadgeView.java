@@ -1,4 +1,4 @@
-package com.carlosolmedo.badge;
+package com.carlosolmedo.badgeview;
 
 import android.content.Context;
 import android.content.res.Resources;
