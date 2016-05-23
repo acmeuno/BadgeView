@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:badge="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
+    tools:context="com.carlosolmedo.badge.MainActivity">
+
+
+    <com.carlosolmedo.badge.BadgeView
+        android:id="@+id/badge1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.carlosolmedo.badge.BadgeView
+        android:id="@+id/badge2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        badge:badge_fillColor="@color/colorPrimary"
+        badge:badge_text="New!"
+        badge:badge_textColor="@color/colorAccent"
+        badge:badge_textSize="18" />
+
+    <com.carlosolmedo.badge.BadgeView
+        android:id="@+id/badge3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.carlosolmedo.badge.BadgeView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="UP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="addBadge"/>
+
+
+
+
+</LinearLayout>
