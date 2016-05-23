@@ -21,12 +21,20 @@
         badge:badge_fillColor="@color/colorPrimary"
         badge:badge_text="New!"
         badge:badge_textColor="@color/colorAccent"
-        badge:badge_textSize="18" />
+        badge:badge_textSize="18"
+        android:paddingLeft="16dp"/>
 
     <com.carlosolmedo.badgeview.BadgeView
         android:id="@+id/badge3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingRight="16dp"
+        android:background="#feafea"/>
+
+    <View
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="#feafea"/>
 
     <com.carlosolmedo.badgeview.BadgeView
         android:layout_width="wrap_content"

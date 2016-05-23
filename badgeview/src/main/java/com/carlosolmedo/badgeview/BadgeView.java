@@ -153,7 +153,7 @@ public class BadgeView extends View {
 
     private void drawBadgeText(Canvas canvas) {
 
-        float x = getWidth()/2;
+        float x = getPaddingLeft() + (getWidth() - getPaddingLeft() - getPaddingRight())/2;
         //the y coordinate marks the bottom of the text, so we need to factor in the height
         Rect bounds = new Rect();
         textPaint.getTextBounds(text, 0, text.length(), bounds);
@@ -189,12 +189,12 @@ public class BadgeView extends View {
         int max = Math.max(width, height);
         setMeasuredDimension(max, max);
         */
-        setMeasuredDimension(Math.max(width, height), height);
+        setMeasuredDimension(Math.max(width, height) +  getPaddingLeft() + getPaddingRight(), height + getPaddingTop() + getPaddingBottom());
     }
 
     private int measureHeight(int measureSpec) {
         //determine height
-        int size = getPaddingTop() + getPaddingBottom();
+        int size = 0;
         //size += textPaint.getFontSpacing();
         Rect bounds = new Rect();
         textPaint.getTextBounds(text, 0, text.length(), bounds);
@@ -208,7 +208,8 @@ public class BadgeView extends View {
 
     private int measureWidth(int measureSpec) {
         //determine width
-        int size = getPaddingLeft() + getPaddingRight();
+        int size = 0;
+
         Rect bounds = new Rect();
         textPaint.getTextBounds(text, 0, text.length(), bounds);
         size += bounds.width();
