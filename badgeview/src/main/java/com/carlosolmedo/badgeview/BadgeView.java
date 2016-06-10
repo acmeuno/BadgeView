@@ -26,8 +26,10 @@ public class BadgeView extends View {
 
         String text;
         int badgeColor;
+        int strokeColor;
         int textColor;
         int textSize;
+
 
         SavedState(Parcelable superState) {
             super(superState);
@@ -37,6 +39,7 @@ public class BadgeView extends View {
             super(in);
             text = in.readString();
             badgeColor = in.readInt();
+            strokeColor = in.readInt();
             textColor = in.readInt();
             textSize = in.readInt();
         }
@@ -46,6 +49,7 @@ public class BadgeView extends View {
             super.writeToParcel(out, flags);
             out.writeString(text);
             out.writeInt(badgeColor);
+            out.writeInt(strokeColor);
             out.writeInt(textColor);
             out.writeInt(textSize);
 
@@ -66,12 +70,15 @@ public class BadgeView extends View {
 
     private static final int BADGE_INNER_PADDING = 6;
     private static final int DEFAULT_TEXT_SIZE = 14;
+    private static final int STROKE_WIDTH = 1;
 
     private Paint textPaint;
     private Paint rectanglePaint;
+    private Paint rectangleStrokePaint;
 
     private String text;
     private int badgeColor;
+    private int strokeColor;
     private int textColor;
     private int textSize;
 
@@ -82,6 +89,7 @@ public class BadgeView extends View {
 
         setupTextPaint();
         setupRectanglePaint();
+        setupRectangleStrokePaint();
 
     }
 
@@ -96,17 +104,28 @@ public class BadgeView extends View {
     private void setupRectanglePaint() {
         rectanglePaint = new Paint();
         rectanglePaint.setColor(badgeColor);
+        rectanglePaint.setStyle(Paint.Style.FILL);
         rectanglePaint.setAntiAlias(true);
+    }
+
+    private void setupRectangleStrokePaint() {
+        rectangleStrokePaint = new Paint();
+        rectangleStrokePaint.setColor(strokeColor);
+        rectangleStrokePaint.setStyle(Paint.Style.STROKE);
+        rectangleStrokePaint.setStrokeWidth(convertDpToPixel(STROKE_WIDTH, getContext()));
+        rectangleStrokePaint.setAntiAlias(true);
     }
 
     public void init(AttributeSet attrs) {
 
+        //Enable saveInstance
         setSaveEnabled(true);
 
         // Go through all custom attrs.
         TypedArray attrsArray = getContext().obtainStyledAttributes(attrs, R.styleable.badge);
 
         badgeColor = attrsArray.getColor(R.styleable.badge_badge_fillColor, Color.RED);
+        strokeColor = attrsArray.getColor(R.styleable.badge_badge_strokeColor, Color.RED);
         textColor = attrsArray.getColor(R.styleable.badge_badge_textColor, Color.WHITE);
         text = attrsArray.getString(R.styleable.badge_badge_text);
         if (text==null) {
@@ -127,6 +146,7 @@ public class BadgeView extends View {
         ss.textColor = textColor;
         ss.textSize = textSize;
         ss.badgeColor = badgeColor;
+        ss.strokeColor = strokeColor;
         return ss;
     }
 
@@ -139,6 +159,7 @@ public class BadgeView extends View {
         textColor = ss.textColor;
         textSize = ss.textSize;
         badgeColor = ss.badgeColor;
+        strokeColor = ss.strokeColor;
 
     }
 
@@ -147,6 +168,7 @@ public class BadgeView extends View {
 
         //drawBadgeCircle(canvas);
         drawBadgeRectangle(canvas);
+        drawBadgeRectangleStroke(canvas);
         drawBadgeText(canvas);
 
     }
@@ -179,6 +201,25 @@ public class BadgeView extends View {
         //canvas.drawRect(left, top, right, bottom, rectanglePaint);
     }
 
+
+    private void drawBadgeRectangleStroke(Canvas canvas) {
+
+        float strokeWidth = convertDpToPixel(STROKE_WIDTH, getContext());
+
+        float left = getPaddingLeft() + strokeWidth/2;
+        float top = getPaddingTop() + strokeWidth/2;
+        float right = getWidth() - getPaddingRight() - strokeWidth/2;
+        float bottom = getHeight() - getPaddingBottom() - strokeWidth/2;
+
+        float rX = getHeight();
+        float rY = getHeight();
+
+        RectF bounds = new RectF(left, top, right, bottom);
+        canvas.drawRoundRect(bounds, rX, rY, rectangleStrokePaint);
+
+        //canvas.drawRect(left, top, right, bottom, rectanglePaint);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
@@ -195,13 +236,14 @@ public class BadgeView extends View {
     private int measureHeight(int measureSpec) {
         //determine height
         int size = 0;
-        //size += textPaint.getFontSpacing();
+
         Rect bounds = new Rect();
         textPaint.getTextBounds(text, 0, text.length(), bounds);
         size += bounds.height();
 
         //2dp of padding top and bottom
         size += convertDpToPixel(BADGE_INNER_PADDING, getContext()) * 2;
+
 
         return resolveSizeAndState(size, measureSpec, 0);
     }
@@ -246,6 +288,12 @@ public class BadgeView extends View {
         invalidate();
     }
 
+    public void setBadgeStrokeColor(int color) {
+        this.strokeColor = color;
+        setupRectangleStrokePaint();
+        invalidate();
+    }
+
     public void setTextColor(int color) {
         this.textColor = color;
         setupTextPaint();
@@ -259,14 +307,4 @@ public class BadgeView extends View {
         float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return px;
     }
-
-    private static float convertPixelsToDp(float px, Context context){
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-        return dp;
-    }
-
-
-
 }
